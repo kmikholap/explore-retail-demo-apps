@@ -6,4 +6,4 @@ metadata:
 
 data:
   DEVICE_NAME: "GPU"
-  VIDEO_URL: "rtsp://demo:VMwareEdge@192.168.88.250/axis-media/media.amp?fps=30"
+  VIDEO_URL: "rtsp://demo:VMwareEdge1!@192.168.88.250/axis-media/media.amp?fps=30"

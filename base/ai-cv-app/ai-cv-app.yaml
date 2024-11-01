@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ai-cv-app
-        image: kmikholap/explore-retail-demo:newyear
+        image: kmikholap/explore-retail-demo:backtoschool
         securityContext:
           privileged: true
           capabilities:

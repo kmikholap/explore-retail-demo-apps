@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-cv-app-deployment
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+        - name: ai-cv-app
+          env:
+          - name: DEVICE_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: ai-cv-config
+                key: DEVICE_NAME
+          - name: VIDEO_URL
+            valueFrom:
+              configMapKeyRef:
+                name: ai-cv-config
+                key: VIDEO_URL

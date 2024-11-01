@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-cv-app-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-cv-app
+  template:
+    metadata:
+      labels:
+        app: ai-cv-app
+    spec:
+      containers:
+      - name: ai-cv-app
+        image: kmikholap/explore-retail-demo:v1
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"] 
+        volumeMounts:
+        - name: dri
+          mountPath: /dev/dri
+        - name: devdir
+          mountPath: /dev
+        - name: sysdir
+          mountPath: /sys
+      volumes:
+      - name: sysdir
+        hostPath:
+          path: /sys
+          type: Directory
+      - name: devdir
+        hostPath:
+          path: /dev
+          type: Directory
+      - name: dri
+        hostPath:
+          path: /dev/dri
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-cv-app-svc
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - port: 2222
+    targetPort: 22
+    nodePort: 32200 
+    protocol: TCP
+    name: ssh
+  - port: 5000
+    targetPort: 5000
+    nodePort: 32500
+    protocol: TCP
+    name: app
+  selector:
+    app: ai-cv-app
